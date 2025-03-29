@@ -1,7 +1,5 @@
 FROM ghost:5-alpine
 
-WORKDIR /var/lib/ghost
-
-RUN npm install ghost-storage-adapter-s3 \
-    && mkdir -p ./content.orig/adapters/storage \
-    && cp -vr ./node_modules/ghost-storage-adapter-s3 ./content.orig/adapters/storage/s3
+RUN npm install --prefix /tmp/ghos3 ghos3 && \
+    cp -r /tmp/ghos3/node_modules/ghos3 current/core/server/adapters/storage/s3 && \
+    rm -r /tmp/ghos3
