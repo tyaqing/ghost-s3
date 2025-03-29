@@ -1,12 +1,7 @@
-FROM ghost:5-alpine
+# FROM ghost:5-alpine AS ghost-base
 
-# 安装ghos3包并配置S3存储适配器
-RUN npm install ghos3 \
-    && mkdir -p ./content/adapters/storage \
-    && cp -r ./node_modules/ghos3/* ./content/adapters/storage/s3 \
-    && rm -Rf node_modules package-lock.json package.json \
-    && cd ./content/adapters/storage/s3 \
-    && npm install
+FROM ghost:5.5.0-alpine AS  ghost-base
 
-# 确保目录权限正确
-RUN chown -R node:node ./content
+RUN npm install --prefix /tmp/ghos3 ghos3 && \
+    cp -r /tmp/ghos3/node_modules/ghos3 current/core/server/adapters/storage/s3 && \
+    rm -r /tmp/ghos3
