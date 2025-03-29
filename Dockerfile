@@ -9,9 +9,7 @@ RUN set -ex \
     && cp -r ./node_modules/ghos3/* ./content/adapters/storage/s3 \
     && rm -Rf node_modules package-lock.json package.json \
     && cd ./content/adapters/storage/s3 \
-    && npm install \
-    # 清理npm缓存以减小镜像大小
-    && npm cache clean --force
+    && npm install
 
 # 确保目录权限正确
 RUN chown -R node:node ./content
